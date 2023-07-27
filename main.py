@@ -3,6 +3,27 @@ from PIL import Image
 from io import BytesIO
 
 
+# Get the directory of the current script
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# path to logo image
+watermark_folder = "watermark"
+files = os.listdir(watermark_folder)
+watermark_img = files[0]
+
+# Folder containing images
+image_folder = "input"
+image_dir = os.path.join(base_dir, image_folder)
+
+# Path to watermark image
+watermark_path = os.path.join(base_dir, watermark_img)
+
+# Output folder for watermarked images
+output_folder = "output"
+output_dir = os.path.join(base_dir, output_folder)
+os.makedirs(output_dir, exist_ok=True)  # Create output_dir if it does not exist
+
+
 def add_watermark(image_path, watermark_path, output_path):
     # input_buffer.seek(0)  # go to the start of the buffer
     base_image = Image.open(image_path)
@@ -50,21 +71,6 @@ def remove_background(input_image_path, output_buffer):
     img.putdata(new_data)
     img.save(output_buffer, "PNG")
 
-
-# Get the directory of the current script
-base_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Folder containing images
-image_folder = "images"
-image_dir = os.path.join(base_dir, image_folder)
-
-# Path to watermark image
-watermark_path = os.path.join(base_dir, "kinetic-garage-logo.png")
-
-# Output folder for watermarked images
-output_folder = "output"
-output_dir = os.path.join(base_dir, output_folder)
-os.makedirs(output_dir, exist_ok=True)  # Create output_dir if it does not exist
 
 # Remove background and change to white, also add watermark to all images in the image_dir folder
 for filename in os.listdir(image_dir):
